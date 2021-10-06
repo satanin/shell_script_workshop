@@ -1,9 +1,10 @@
 %title: Shell Scripting Workshop
 %date: 06-10-2021
 %author: Raul
-Shell scripting Workshop
+Shell scripting
 =========
 
+<br>
 * Please be aware that Im not an expert
 <br>
 * But I will do my best!.👍🏻
@@ -24,15 +25,14 @@ The basics
 "#!/bin/bash or #!/bin/sh or #!/bin/dash" or ...
 ====
 
-The \! after the # tells the parser that this
-is not a comment this `!#` it's called she-bang,
-short name for #(sharp) \!(bang). The following
-path indicates which shell is going to be used
-to execute the script, ideally the first two bytes.
+The \! after the # tells the parser that this is not
+a comment this `!#` it's called she-bang,short name
+for #(sharp) \!(bang). The following path indicates
+which shell is going to be used to execute the script.
 _*this should be in the first line of the script*_
-[or it can be problematic](https://github.com/koalaman/shellcheck/wiki/SC1128), after the first line
-the \!# becomes a regular comment and the script
-output may not be the one you're expecting.
+ideally the first two bytes [or it can be problematic](https://github.com/koalaman/shellcheck/wiki/SC1128),
+after the first line the \!# becomes a regular comment
+and the script output may not be the rone you're expecting.
 
 The reason that so many scripts begin with
 `/bin/bash` or `/bin/sh` is because this are the
@@ -68,8 +68,8 @@ output:
 This is going to
 work
 ./every_new_line_is_a_command.sh: line 4: [: missing `]'
-./every_new_line_is_a_command.sh: line 5: -gt: command not found
-1 is less than 0
+./every_new_line_is_a_command.sh: line 5: -gt: command
+not found 1 is less than 0
 ```
 
 ```
@@ -96,32 +96,34 @@ work
 Comments start with a \#
 ===
 
-Except in the first line, every other line with a
-\# is going to be considered a comment.
+Except in the first line, every other line with a \# is
+going to be considered a comment.
 
 ```
   #!/bin/bash
   #! This is considered also a comment
   echo "Hello World" # This is another comment
 ```
+
 input: `$ ./comments.sh`
+
 output: `Hello World`
 
 ---
 Variables
 ===
 
-Like any other language shell scripting has variables
-you should declare variables using *`name=value`*
-note that if you use `name = value` is going to
-interpret `name` as a program and `=` and `value`
-as arguments.
+Like any other language shell scripting has variables you
+should declare variables using *`name=value`* note that if
+you use `name = value` is going to interpret `name` as a
+program and `=` and `value` as arguments.
 
 ```
   #!/bin/bash
   NAME=Alex
   echo "$NAME"
 ```
+
 input: `$ ./variables.sh`
 
 output: `Alex`
@@ -141,9 +143,9 @@ output:
 Variable values as command outputs
 ===
 
-Sometimes we need a variable value that is going
-to be the output of another command, we can do this
-using the following syntax `variable=$(command -options)`
+Sometimes we need a variable value that is going to be
+the output of another command, we can do this using the
+following syntax `variable=$(command -options)`.
 
 ```
   #!/bin/bash
@@ -159,11 +161,9 @@ output:
 Parameters
 ===
 
-We can asing parameters to variables using the
-following syntax `variable_name=$#` being the `#`
-the order of the parameter passed.
-
-input: `$ ./parameters.sh Alex Joe`
+We can asing parameters to variables using the following
+syntax `variable_name=$#` being the `#` the order of the
+parameter passed.
 
 ```
   #!/bin/bash
@@ -172,6 +172,8 @@ input: `$ ./parameters.sh Alex Joe`
   echo "The name is: $name"
   echo "The other name is: $other_name"
 ```
+
+input: `$ ./parameters.sh Alex Joe`
 
 output:
 `The name is: Alex`
@@ -182,13 +184,14 @@ Environment Variables
 ===
 
 We can access environment variables in our scripts
-input: `$ NAME=Alex ANOTHER_NAME=Joe ./environment_variables.sh`
 
 ```
   #!/bin/bash
   echo "The name is: $NAME"
   echo "The other name is: $ANOTHER_NAME"
 ```
+
+input: `$ NAME=Alex ANOTHER_NAME=Joe ./environment_variables.sh`
 
 output:
 `The name is: Alex`
@@ -236,8 +239,7 @@ output: `Hi Joe`
 Variables from inputs 2
 ===
 
-Read command can take several inputs separated by
-spaces or tab.
+Read command can take several inputs separated by spaces or tab.
 
 ```
   #!/bin/bash
@@ -248,14 +250,29 @@ spaces or tab.
   echo "Thing 3: $thing3"
 ```
 
+The IFS or *Internal Field Separator* can be modified within the
+script.
+
+```
+  #!/bin/bash
+  old_IFS="$IFS"
+  IFS=,
+  echo "Tell me more than one thing, separated by comma"
+  read thing1 thing2 thing3
+  IFS=$old_IFS
+  echo "Thing 1: $thing1"
+  echo "Thing 2: $thing2"
+  echo "Thing 3: $thing3"
+```
+
 ---
 Test Command 1/3
 ===
 
-We have a special command called *test* to help
-us evaluate conditions. The alias for this command
-is `[`. Test command is used in almost all the shells
-and his syntax is a little bit tricky.
+We have a special command called *test* to help us evaluate
+conditions. The alias for this command is `[`. *Test* command
+is used in almost all the shells and his syntax can be little
+bit tricky.
 
 This works: `[ 1 -gt 0 ] && echo "Wow"`
 output: `Wow`
@@ -263,10 +280,12 @@ output: `Wow`
 This does not work: `[1 -gt 0] && echo "Wow"`
 output: `bash: [1: command not found`
 
-This is because is looking for the command `[1` that
+This is because is trying to execute the command `[1` that
 doesn't exists in our shell.
 
-We can do the same using: `test 1 -gt 0 && echo "Wow"`
+We can do the same using the whole name:
+
+input: `$ test 1 -gt 0 && echo "Wow"`
 output: `Wow`
 
 ---
@@ -330,8 +349,8 @@ we can use an `if` conditional as follows:
   fi
 ```
 
-Note that `$#` tells us the number of params passed
-to the script.
+Note that `$#` tells us the number of params passed to the
+script.
 
 input: `./conditionals.sh`
 
@@ -350,7 +369,7 @@ is equivalent to the other way but much less readable.
 elif
 ===
 
-We can use elif to check a second condition
+We can use elif to check a second condition.
 
 ```
   #!/bin/bash
@@ -506,14 +525,137 @@ Functions also admit parameters
   create_branch () {
     branch_name=$1
     echo "Creating new branch $branch_name"
-    git branch create $branch_name
+    git branch $branch_name
   }
+  create_branch "my_branch"
+```
+
+output: `Creating new branch my_branch`
+
+---
+flow control
+===
+
+`$?` tells us the exit code of the last command, we have a ton of exit codes
+but to resume code 0 means that there were no errors, every code > 0 is a
+error exit code.
+
+input: `$ echo 'hola'; [ $? -le 0 ] && echo "it went well" || echo "failed"`
+output:
+```
+hola
+it went well
+```
+
+---
+External Apps - sed
+===
+
+*[sed](https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/)* is the acronym of stream editor and is a
+powerfull app that can be used to find, search, replace, etc.
+
+input: `$ cat text_file.txt`
+output:
+```
+unix is great os. unix is opensource. unix is free os.
+learn operating system.
+unix linux which one you choose.
+unix is easy to learn.unix is a multiuser os.Learn unix.
+unix is powerful.
+```
+
+input: `$ sed 's/unix/linux/g` text_file.txt
+output:
+```
+linux is great os. linux is opensource. linux is free os.
+learn operating system.
+linux linux which one you choose.
+linux is easy to learn.linux is a multiuser os.Learn linux.
+linux is powerful.
+```
+
+Note that the 's/' stands for search `unix` is the pattern we are looking for and
+`linux` is the substitution patter, `/g` stands for global substitution. We can
+also substitute just the first occurrence with `/1` or all of the from the nth
+occurrence with `/3g`.
+
+*sed* is super complete so please check the link below to see some more examples
+
+---
+External Apps - awk
+===
+
+*awk* stands for Aho, Weinberger and Kernighan the names of his creators. *awk* is a
+DSL for text processing like sed and grep.
+
+input: `$ ls -l`
+output:
+```
+total 208
+-rw-r--r--  1 raul.garcia@flywire.com  staff    269 Oct  6 10:13 README.md
+-rwxr-xr-x  1 raul.garcia@flywire.com  staff    193 Oct  6 06:57 case.sh
+-rwxr-xr-x  1 raul.garcia@flywire.com  staff     93 Oct  6 04:40 comments.sh
+...
+```
+A silly example printing column 9th of each line output, and using *sed* to remove
+file extensions.
+input: `$ ls -l | grep rw | awk '{ print $9 }' | sed 's/\.[a-z]\{2\}//g'`
+output:
+```
+README
+case
+comments
+...
+```
+
+---
+External Apps - jq
+===
+
+We can use jq to read and extract json files from console.
+
+input: `$ jq . a_json_file`
+output:
+```
+[
+  {
+    "roll": 3,
+    "name": "Micheal",
+    "batch": 29,
+    "department": "CSE"
+  },
+  {
+    "roll": 55,
+    "name": "Lisa",
+    "batch": 34,
+    "department": "BBA"
+  },
+  {
+    "roll": 12,
+    "name": "John",
+    "batch": 22,
+    "department": "English"
+  }
+]
+```
+
+input: `$ jq '.[] | .name' a_json_file | sed 's/Micheal/Michael/1`
+output:
+```
+"Michael"
+"Lisa"
+"John"
 ```
 
 ---
 Useful Links
 ===
+
+
 [ShellScript](https://www.shellscript.sh/)
+[sed examples](https://likegeeks.com/sed-linux/)
+[jq](https://linuxhint.com/bash_jq_command/)
+[awk examples](https://likegeeks.com/awk-command/)
 [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
 
 ---

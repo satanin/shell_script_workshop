@@ -1,6 +1,7 @@
 #!/bin/bash
-git_branch () {
-  git branch --show-current
+create_branch () {
+  branch_name=$1
+  echo "Creating new branch $branch_name"
+  git branch $branch_name
 }
-
-echo "Our current git branch is $(git_branch)"
+create_branch "my_branch"
