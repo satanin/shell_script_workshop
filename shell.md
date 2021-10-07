@@ -639,7 +639,7 @@ output:
 ]
 ```
 
-input: `$ jq '.[] | .name' a_json_file | sed 's/Micheal/Michael/1`
+input: `$ jq '.[] | .name' a_json_file | sed 's/Micheal/Michael/1'`
 output:
 ```
 "Michael"
